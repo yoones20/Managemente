@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 
 def createDB():
    db = QSqlDatabase.addDatabase('QSQLITE')
-   db.setDatabaseName('sportsdatabase.db')
+   db.setDatabaseName('class.db')
 
    if not db.open():
       msg = QMessageBox()
