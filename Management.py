@@ -16,3 +16,13 @@ def createDB():
       retval = msg.exec_()
       return False
 query = QSqlQuery()
+
+
+query.exec_("""
+CREATE TABLE IF NOT EXSIST teacher(
+            id INTEGER PRYMARY KEY,
+            Name TEXT NOT NULL,
+            Number_class INTEGER,
+            Time_class INTEGER
+)
+""")
