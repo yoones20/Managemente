@@ -47,11 +47,35 @@ class MainWindow(QWidget):
 
         query = QSqlQuery()
         query.exec_("""
-            CREATE TABLE IF NOT EXISTS teache(
+            CREATE TABLE IF NOT EXISTS teache (
                 id INTEGER PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Number_class INTEGER,
                 Time_class INTEGER
+            )
+        """)
+
+        query.exec_("""
+            CREATE TABLE IF NOT EXISTS honar_amoz (
+                id INTEGER PRIMARY KEY,
+                Title TEXT NOT NULL,
+                Description TEXT
+            )
+        """)
+
+        query.exec_("""
+            CREATE TABLE IF NOT EXISTS class (
+                id INTEGER PRIMARY KEY,
+                ClassName TEXT NOT NULL,
+                ClassDescription TEXT
+            )
+        """)
+
+        query.exec_("""
+            CREATE TABLE IF NOT EXISTS time_class (
+                id INTEGER PRIMARY KEY,
+                ClassTime TEXT NOT NULL,
+                Day TEXT NOT NULL
             )
         """)
 
