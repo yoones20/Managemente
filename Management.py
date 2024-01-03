@@ -78,7 +78,6 @@ class MainWindow(QWidget):
                 Day TEXT NOT NULL
             )
         """)
-
     def insert_data(self):
         name = self.name_edit.text()
         number_class = int(self.number_class_edit.text())
