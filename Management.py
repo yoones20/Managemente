@@ -3,11 +3,11 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdi
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 class MainWindow(QWidget):
-    def init(self):
-        super().init()
+    def __init__(self):
+        super().__init__()
 
         self.setWindowTitle("Database GUI Example")
-        self.setGeometry(100, 100, 400, 200)
+        self.setGeometry(500, 500, 500, 500)
 
         self.init_ui()
 
@@ -47,7 +47,7 @@ class MainWindow(QWidget):
 
         query = QSqlQuery()
         query.exec_("""
-            CREATE TABLE IF NOT EXISTS teache (
+            CREATE TABLE IF NOT EXISTS teacher (
                 id INTEGER PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Number_class INTEGER,
