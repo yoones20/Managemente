@@ -83,15 +83,15 @@ class MainWindow(QWidget):
         number_class = int(self.number_class_edit.text())
         time_class = int(self.time_class_edit.text())
         query = QSqlQuery()
-        query.prepare("INSERT INTO teache (Name, Number_class, Time_class) VALUES (?, ?, ?)")
+        query.prepare("INSERT INTO teacher (Name, Number_class, Time_class) VALUES (?, ?, ?)")
         query.addBindValue(name)
         query.addBindValue(number_class)
         query.addBindValue(time_class)
 
         if query.exec_():
-            print("Data inserted successfully.")
+            print("اطلاعات با موفقیت اعمال شدند")
         else:
-            print("Error inserting data.")
+            print("خطا در وارد کردن اطلاعات")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
