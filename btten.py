@@ -129,58 +129,70 @@ class MainWindow(QWidget):
         self.table_view.setModel(model)
 
     def update_data(self):
-        selected_row = self.table_view.selectionModel().currentIndex().row()
-        if selected_row >= 0:
-            name = self.name_edit.text()
-            number_class = int(self.number_class_edit.text())
-            time_class = int(self.time_class_edit.text())
+     selected_row = self.table_view.selectionModel().currentIndex().row()
+     if selected_row >= 0:
+        name = self.name_edit.text()
+        number_class = int(self.number_class_edit.text())
+        time_class = int(self.time_class_edit.text())
 
-            query = QSqlQuery()
-            query.prepare("UPDATE teacher SET Name=?, Number_class=?, Time_class=? WHERE id=?")
-            query.addBindValue(name)
-            query.addBindValue(number_class)
-            query.addBindValue(time_class)
-            query.addBindValue(selected_row + 1)  # Assuming id starts from 1
+        query = QSqlQuery()
+        query.prepare("UPDATE teacher SET Name=?, Number_class=?, Time_class=? WHERE id=?")
+        query.addBindValue(name)
+        query.addBindValue(number_class)
+        query.addBindValue(time_class)
+        query.addBindValue(selected_row + 1) 
 
-            if query.exec_():
-                print("Data updated successfully")
-                self.load_data()
-            else:
-                print("Error updating data")
-
+        if query.exec_():
+            print("Data updated successfully")
+            self.load_data()
+        else:
+            print("Error updating data")
     def edit_data(self):
         selected_row = self.table_view.selectionModel().currentIndex().row()
         if selected_row >= 0:
-            # Fetch data from the selected row and populate the edit fields
-            # This part is implementation-specific based on your database schema
-            # For simplicity, I assume the data is fetched from the current model
             model = self.table_view.model()
-            index_name = model.index(selected_row, 1)  # Assuming Name is in the second column
-            index_number_class = model.index(selected_row, 2)  # Assuming Number_class is in the third column
-            index_time_class = model.index(selected_row, 3)  # Assuming Time_class is in the fourth column
+            index_name = model.index(selected_row, 1)
+            index_number_class = model.index(selected_row, 2) 
+            index_time_class = model.index(selected_row, 3)
 
             name = model.data(index_name)
             number_class = model.data(index_number_class)
             time_class = model.data(index_time_class)
-
-            # Populate the edit fields
             self.name_edit.setText(str(name))
             self.number_class_edit.setText(str(number_class))
             self.time_class_edit.setText(str(time_class))
 
     def delete_data(self):
-        selected_row = self.table_view.selectionModel().currentIndex().row()
-        if selected_row >= 0:
-            query = QSqlQuery()
-            query.prepare("DELETE FROM teacher WHERE id=?")
-            query.addBindValue(selected_row + 1)  # Assuming id starts from 1
+     selected_row = self.table_view.selectionModel().currentIndex().row()
+     if selected_row >= 0:
+        query = QSqlQuery()
+        query.prepare("DELETE FROM teacher WHERE id=?")
+        query.addBindValue(selected_row + 1)  
 
-            if query.exec_():
-                print("Data deleted successfully")
-                self.load_data()
-            else:
-                print("Error deleting data")
+        if query.exec_():
+            print("Data deleted successfully")
+            self.load_data()
+        else:
+            print("Error deleting data")
+    def apply_changes(self):
+     selected_row = self.table_view.selectionModel().currentIndex().row()
+     if selected_row >= 0:
+        name = self.name_edit.text()
+        number_class = int(self.number_class_edit.text())
+        time_class = int(self.time_class_edit.text())
 
+        query = QSqlQuery()
+        query.prepare("UPDATE teacher SET Name=?, Number_class=?, Time_class=? WHERE id=?")
+        query.addBindValue(name)
+        query.addBindValue(number_class)
+        query.addBindValue(time_class)
+        query.addBindValue(selected_row + 1) 
+
+        if query.exec_():
+            print("Changes applied successfully")
+            self.load_data()
+        else:
+            print("Error applying changes")
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
