@@ -80,16 +80,18 @@ class MainWindow(QWidget):
         query.exec_("""
             CREATE TABLE IF NOT EXISTS honar_amoz (
                 id INTEGER PRIMARY KEY,
-                Title TEXT NOT NULL,
+                Name TEXT NOT NULL,
                 Description TEXT
+                NumberClass INTEGER
             )
         """)
 
         query.exec_("""
             CREATE TABLE IF NOT EXISTS class (
                 id INTEGER PRIMARY KEY,
-                ClassName TEXT NOT NULL,
+                ClassNumber INTEGER,
                 ClassDescription TEXT
+                ClassTime INTEGER
             )
         """)
 
@@ -166,14 +168,15 @@ class MainWindow(QWidget):
      selected_row = self.table_view.selectionModel().currentIndex().row()
      if selected_row >= 0:
         query = QSqlQuery()
-        query.prepare("DELETE FROM teacher WHERE id=?")
-        query.addBindValue(selected_row + 1)  
+        query.prepare("DELETE FROM teacher WHERE id = :id")
+        query.bindValue(":id", selected_row + 1)  # Assuming id starts from 1
 
         if query.exec_():
             print("Data deleted successfully")
             self.load_data()
         else:
-            print("Error deleting data")
+            print("Error deleting data:", query.lastError().text())
+    
     def apply_changes(self):
      selected_row = self.table_view.selectionModel().currentIndex().row()
      if selected_row >= 0:
