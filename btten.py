@@ -37,6 +37,14 @@ class MainWindow(QWidget):
         self.edit_button.clicked.connect(self.edit_data)
         self.delete_button = QPushButton("Delete")
         self.delete_button.clicked.connect(self.delete_data)
+        self.delete_all_button = QPushButton("Delete All")
+        self.delete_all_button.clicked.connect(self.delete_all_data)
+        self.print_button = QPushButton("Print")
+        self.print_button.clicked.connect(self.print_data)
+
+
+        
+
 
         layout = QVBoxLayout()
         layout.addWidget(self.name_label)
@@ -53,7 +61,9 @@ class MainWindow(QWidget):
         layout.addWidget(self.update_button)
         layout.addWidget(self.edit_button)
         layout.addWidget(self.delete_button)
-
+        layout.addWidget(self.delete_all_button)
+        layout.addWidget(self.print_button)
+        
         self.setLayout(layout)
 
     def createDB(self):
@@ -164,12 +174,25 @@ class MainWindow(QWidget):
             self.number_class_edit.setText(str(number_class))
             self.time_class_edit.setText(str(time_class))
 
+    def delete_all_data(self):
+        query = QSqlQuery()
+        query.prepare("DELETE FROM teacher")
+        
+        if query.exec_():
+            print("All data deleted successfully")
+            self.load_data()
+        else:
+            print("Error deleting all data:", query.lastError().text())
+
     def delete_data(self):
-     selected_row = self.table_view.selectionModel().currentIndex().row()
-     if selected_row >= 0:
+        selected_row = self.table_view.selectionModel().currentIndex().row()
+        if selected_row >= 0:
+            self.delete_row(selected_row)
+
+    def delete_row(self, row):
         query = QSqlQuery()
         query.prepare("DELETE FROM teacher WHERE id = :id")
-        query.bindValue(":id", selected_row + 1)  # Assuming id starts from 1
+        query.bindValue(":id", row + 1)  # Assuming id starts from 1
 
         if query.exec_():
             print("Data deleted successfully")
@@ -196,6 +219,18 @@ class MainWindow(QWidget):
             self.load_data()
         else:
             print("Error applying changes")
+    def print_data(self):
+        model = self.table_view.model()
+        rows = model.rowCount()
+        columns = model.columnCount()
+
+        print("Current Table Data:")
+        for row in range(rows):
+            row_data = []
+            for col in range(columns):
+                index = model.index(row, col)
+                row_data.append(model.data(index))
+            print(row_data)
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
