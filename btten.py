@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QTableView, QSizePolicy
 from PyQt5.QtSql import QSqlDatabase, QSqlQueryModel, QSqlQuery
-
+import tkinter as tk
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -20,7 +20,6 @@ class MainWindow(QWidget):
         self.time_class_edit = QLineEdit()
         self.submit_button = QPushButton("Submit")
         self.submit_button.clicked.connect(self.insert_data)
-
         self.table_view = QTableView()
         self.table_view.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.load_data()
@@ -42,7 +41,8 @@ class MainWindow(QWidget):
         self.print_button = QPushButton("Print")
         self.print_button.clicked.connect(self.print_data)
 
-
+        logo_label = QLabel("A.Y")
+        logo_label.setStyleSheet("font-size: 12px; color: BLACK")
         
 
 
@@ -63,7 +63,7 @@ class MainWindow(QWidget):
         layout.addWidget(self.delete_button)
         layout.addWidget(self.delete_all_button)
         layout.addWidget(self.print_button)
-        
+        layout.addWidget(logo_label)
         self.setLayout(layout)
 
     def createDB(self):
