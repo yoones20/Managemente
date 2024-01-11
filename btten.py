@@ -192,7 +192,7 @@ class MainWindow(QWidget):
     def delete_row(self, row):
         query = QSqlQuery()
         query.prepare("DELETE FROM teacher WHERE id = :id")
-        query.bindValue(":id", row + 1)  # Assuming id starts from 1
+        query.bindValue(":id", row + 1) 
 
         if query.exec_():
             print("Data deleted successfully")
